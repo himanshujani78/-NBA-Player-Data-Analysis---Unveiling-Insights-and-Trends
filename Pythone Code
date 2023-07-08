@@ -1,0 +1,921 @@
+import pandas as pd
+df = pd.read_excel('nba.xls')
+df.memory_usage()
+Index        128
+Name        3656
+Team        3656
+Number      3656
+Position    3656
+Age         3656
+Height      3656
+Weight      3656
+College     3656
+Salary      3656
+dtype: int64
+import numpy as np
+np.iinfo(np.uint8)
+iinfo(min=0, max=255, dtype=uint8)
+import numpy as np
+np.iinfo(np.uint16)
+iinfo(min=0, max=65535, dtype=uint16)
+import numpy as np
+np.iinfo(np.uint32)
+iinfo(min=0, max=4294967295, dtype=uint32)
+import numpy as np
+np.iinfo(np.uint64)
+iinfo(min=0, max=18446744073709551615, dtype=uint64)
+import numpy as np
+np.iinfo(np.int8)
+iinfo(min=-128, max=127, dtype=int8)
+import numpy as np
+np.iinfo(np.int16)
+iinfo(min=-32768, max=32767, dtype=int16)
+import numpy as np
+np.iinfo(np.int32)
+iinfo(min=-2147483648, max=2147483647, dtype=int32)
+import numpy as np
+np.iinfo(np.int64)
+iinfo(min=-9223372036854775808, max=9223372036854775807, dtype=int64)
+import numpy as np
+np.finfo(np.float16)
+finfo(resolution=0.001, min=-6.55040e+04, max=6.55040e+04, dtype=float16)
+import numpy as np
+np.finfo(np.float32)
+finfo(resolution=1e-06, min=-3.4028235e+38, max=3.4028235e+38, dtype=float32)
+import numpy as np
+np.finfo(np.float64)
+finfo(resolution=1e-15, min=-1.7976931348623157e+308, max=1.7976931348623157e+308, dtype=float64)
+df.describe()
+Number	Age	Weight	Salary
+count	457.000000	457.000000	457.000000	4.460000e+02
+mean	17.678337	26.938731	221.522976	4.842684e+06
+std	15.966090	4.404016	26.368343	5.229238e+06
+min	0.000000	19.000000	161.000000	3.088800e+04
+25%	5.000000	24.000000	200.000000	1.044792e+06
+50%	13.000000	26.000000	220.000000	2.839073e+06
+75%	25.000000	30.000000	240.000000	6.500000e+06
+max	99.000000	40.000000	307.000000	2.500000e+07
+df["Number"].min(),df["Number"].max()
+#df["Number"].dtype
+(0, 99)
+df["Age"].min(),df["Age"].max()
+(19, 40)
+df["Weight"].min(),df["Weight"].max()
+(161, 307)
+df["Salary"].min(),df["Salary"].max()
+(30888.0, 25000000.0)
+df.info(memory_usage="deep")
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 457 entries, 0 to 456
+Data columns (total 9 columns):
+ #   Column    Non-Null Count  Dtype  
+---  ------    --------------  -----  
+ 0   Name      457 non-null    object 
+ 1   Team      457 non-null    object 
+ 2   Number    457 non-null    int64  
+ 3   Position  457 non-null    object 
+ 4   Age       457 non-null    int64  
+ 5   Height    457 non-null    object 
+ 6   Weight    457 non-null    int64  
+ 7   College   373 non-null    object 
+ 8   Salary    446 non-null    float64
+dtypes: float64(1), int64(3), object(5)
+memory usage: 156.3 KB
+df["Number"]=df["Number"].astype('uint8')
+dtype('uint8')
+df["Height"]=df["Height"].astype('category')
+print(df.dtypes)
+Name          object
+Team          object
+Number         uint8
+Position      object
+Age            int64
+Height      category
+Weight         int64
+College       object
+Salary       float64
+dtype: object
+df["Weight"]=df["Weight"].astype('uint16')
+print(df.dtypes)
+Name          object
+Team          object
+Number         uint8
+Position      object
+Age            int64
+Height      category
+Weight        uint16
+College       object
+Salary       float64
+dtype: object
+df.memory_usage(deep=True).sum()
+77502
+df["Name"]=df["Name"].astype('category')
+df["Team"]=df["Team"].astype('category')
+df["Position"]=df["Position"].astype('category')
+df["Height"]=df["Height"].astype('category')
+df["College"]=df["College"].astype('category')
+print(df.dtypes)
+Name        category
+Team        category
+Number         uint8
+Position    category
+Age            int64
+Height      category
+Weight        uint16
+College     category
+Salary       float64
+dtype: object
+df["Salary"]=df["Salary"].astype('float32')
+df.memory_usage(deep=True).sum() * 0.000001
+0.07567399999999999
+df.isna().sum()
+Name         0
+Team         0
+Number       0
+Position     0
+Age          0
+Height       0
+Weight       0
+College     84
+Salary      11
+dtype: int64
+df.info()
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 457 entries, 0 to 456
+Data columns (total 9 columns):
+ #   Column    Non-Null Count  Dtype   
+---  ------    --------------  -----   
+ 0   Name      457 non-null    category
+ 1   Team      457 non-null    category
+ 2   Number    457 non-null    uint8   
+ 3   Position  457 non-null    category
+ 4   Age       457 non-null    int64   
+ 5   Height    457 non-null    category
+ 6   Weight    457 non-null    uint16  
+ 7   College   373 non-null    category
+ 8   Salary    446 non-null    float32 
+dtypes: category(5), float32(1), int64(1), uint16(1), uint8(1)
+memory usage: 36.4 KB
+row_pos = 455
+row_data = df.iloc[row_pos]
+print(row_data)
+Name               Tibor Pleiss
+Team                  Utah Jazz
+Number                       21
+Position                      C
+Age                          26
+Height      2023-03-07 00:00:00
+Weight                      256
+College                     NaN
+Salary                2900000.0
+Name: 455, dtype: object
+import pandas as pd
+df = pd.read_excel('nba11.xls')
+df
+Name	Team	Number	Position	Age	Height	Weight	College	Salary
+0	Avery Bradley	Boston Celtics	0	PG	25	2023-02-06 00:00:00	180	Texas	7730337.0
+1	Jae Crowder	Boston Celtics	99	SF	25	2023-06-06 00:00:00	235	Marquette	6796117.0
+2	John Holland	Boston Celtics	30	SG	27	2023-05-06 00:00:00	205	Boston University	NaN
+3	R.J. Hunter	Boston Celtics	28	SG	22	2023-05-06 00:00:00	185	Georgia State	1148640.0
+4	Jonas Jerebko	Boston Celtics	8	PF	29	2023-10-06 00:00:00	231	NaN	5000000.0
+...	...	...	...	...	...	...	...	...	...
+452	Trey Lyles	Utah Jazz	41	PF	20	2023-10-06 00:00:00	234	Kentucky	2239800.0
+453	Shelvin Mack	Utah Jazz	8	PG	26	2023-03-06 00:00:00	203	Butler	2433333.0
+454	Raul Neto	Utah Jazz	25	PG	24	2023-01-06 00:00:00	179	NaN	900000.0
+455	Tibor Pleiss	Utah Jazz	21	C	26	2023-03-07 00:00:00	256	NaN	2900000.0
+456	Jeff Withey	Utah Jazz	24	C	26	7-0	231	Kansas	947276.0
+457 rows × 9 columns
+
+df.drop([25,72,63])df.
+Name	Team	Number	Position	Age	Height	Weight	College	Salary
+0	Avery Bradley	Boston Celtics	0	PG	25	2023-02-06 00:00:00	180	Texas	7730337.0
+1	Jae Crowder	Boston Celtics	99	SF	25	2023-06-06 00:00:00	235	Marquette	6796117.0
+2	John Holland	Boston Celtics	30	SG	27	2023-05-06 00:00:00	205	Boston University	NaN
+3	R.J. Hunter	Boston Celtics	28	SG	22	2023-05-06 00:00:00	185	Georgia State	1148640.0
+4	Jonas Jerebko	Boston Celtics	8	PF	29	2023-10-06 00:00:00	231	NaN	5000000.0
+...	...	...	...	...	...	...	...	...	...
+452	Trey Lyles	Utah Jazz	41	PF	20	2023-10-06 00:00:00	234	Kentucky	2239800.0
+453	Shelvin Mack	Utah Jazz	8	PG	26	2023-03-06 00:00:00	203	Butler	2433333.0
+454	Raul Neto	Utah Jazz	25	PG	24	2023-01-06 00:00:00	179	NaN	900000.0
+455	Tibor Pleiss	Utah Jazz	21	C	26	2023-03-07 00:00:00	256	NaN	2900000.0
+456	Jeff Withey	Utah Jazz	24	C	26	7-0	231	Kansas	947276.0
+454 rows × 9 columns
+
+df["Age"].mean()
+26.938730853391686
+df[["Age","Name","College"]].value_counts().sum()
+373
+df["College"].unique()
+array(['Texas', 'Marquette', 'Boston University', 'Georgia State', nan,
+       'LSU', 'Gonzaga', 'Louisville', 'Oklahoma State', 'Ohio State',
+       'Washington', 'Kentucky', 'North Carolina', 'Arizona',
+       'Georgia Tech', 'Cincinnati', 'Miami (FL)', 'Stanford', 'Syracuse',
+       'Saint Louis', 'Kansas', 'Georgetown', 'Texas A&M', 'UCLA', 'UNLV',
+       'Wichita State', "Saint Joseph's", 'Notre Dame', 'Norfolk State',
+       'Duke', 'Murray State', 'Tennessee State', 'Bowling Green',
+       'Purdue', 'Wake Forest', 'Michigan', 'Missouri', 'USC',
+       'Villanova', 'Rider', 'Utah', 'Belmont', 'Davidson', 'Vanderbilt',
+       'Michigan State', 'Florida', 'Washington State', 'Arizona State',
+       'Oklahoma', 'Wyoming', "St. John's", 'Maryland', 'Wisconsin',
+       'Utah Valley', 'North Carolina State', 'UC Santa Barbara',
+       'Baylor', 'Connecticut', 'Oregon State', 'New Mexico', 'Oregon',
+       'Creighton', 'Arkansas', 'Memphis', "Saint Mary's", 'Tennessee',
+       'Alabama', 'Georgia', 'Colorado', 'Boston College', 'Temple',
+       'Fresno State', 'IUPUI', 'Eastern Washington', 'Western Michigan',
+       'Virginia', 'Northeastern', 'Western Kentucky', 'Nevada',
+       'Illinois', 'Kansas State', 'Charleston', 'Clemson',
+       'Blinn College', 'Providence', 'Detroit', 'Rhode Island',
+       'California', 'Cleveland State', 'Iowa State', 'Florida State',
+       'Long Beach State', 'Penn State', 'Indiana', 'San Diego State',
+       'Western Carolina', 'Houston', 'Xavier', 'Old Dominion',
+       'Minnesota', 'Louisiana Tech', 'Bucknell', 'Pittsburgh',
+       'Virginia Commonwealth', 'Harvard', 'Marshall', 'Iowa',
+       'St. Bonaventure', 'Louisiana-Lafayette', 'Colorado State',
+       'Virginia Tech', 'DePaul', 'Morehead State', 'Central Michigan',
+       'Weber State', 'Lehigh', 'Westchester CC', 'Dayton', 'Butler'],
+      dtype=object)
+df.count()
+Name        457
+Team        457
+Number      457
+Position    457
+Age         457
+Height      457
+Weight      457
+College     373
+Salary      446
+dtype: int64
+df.value_counts()
+Name                    Team                   Number  Position  Age  Height               Weight  College         Salary    
+Aaron Brooks            Chicago Bulls          0       PG        31   6-0                  161     Oregon          2250000.0     1
+Mike Muscala            Atlanta Hawks          31      PF        24   2023-11-06 00:00:00  240     Bucknell        947276.0      1
+Mike Dunleavy           Chicago Bulls          34      SG        35   2023-09-06 00:00:00  230     Duke            4500000.0     1
+Mike Conley             Memphis Grizzlies      11      PG        28   2023-01-06 00:00:00  175     Ohio State      9588426.0     1
+Michael Kidd-Gilchrist  Charlotte Hornets      14      SF        22   2023-07-06 00:00:00  232     Kentucky        6331404.0     1
+                                                                                                                                ..
+Hassan Whiteside        Miami Heat             21      C         26   7-0                  265     Marshall        981348.0      1
+Harrison Barnes         Golden State Warriors  40      SF        24   2023-08-06 00:00:00  225     North Carolina  3873398.0     1
+Greivis Vasquez         Milwaukee Bucks        21      PG        29   2023-06-06 00:00:00  217     Maryland        6600000.0     1
+Greg Monroe             Milwaukee Bucks        15      C         26   2023-11-06 00:00:00  265     Georgetown      16407500.0    1
+Zach Randolph           Memphis Grizzlies      50      PF        34   2023-09-06 00:00:00  260     Michigan State  9638555.0     1
+Length: 364, dtype: int64
+df[df["Age"]>25][["Name","Age","Position","College"]].sort_values(by="Name").head(20)
+Name	Age	Position	College
+152	Aaron Brooks	31	PG	Oregon
+312	Al Horford	30	C	Florida
+330	Al Jefferson	31	C	NaN
+368	Alan Anderson	33	SG	Michigan State
+273	Alex Stepheson	28	PF	USC
+275	Alexis Ajinca	28	C	NaN
+287	Alonzo Gee	29	SF	Alabama
+348	Amar'e Stoudemire	33	PF	NaN
+5	Amir Johnson	29	PF	NaN
+90	Anderson Varejao	33	PF	NaN
+83	Andre Iguodala	32	SF	Arizona
+304	Andre Miller	40	PG	Utah
+78	Andrew Bogut	31	C	Utah
+248	Andrew Goudelock	27	PG	Charleston
+362	Andrew Nicholson	26	PF	St. Bonaventure
+421	Anthony Morrow	30	SG	Georgia Tech
+195	Anthony Tolliver	31	PF	Creighton
+182	Aron Baynes	29	C	Washington State
+30	Arron Afflalo	30	SG	UCLA
+96	Blake Griffin	27	PF	Oklahoma
+df.iloc[0:6]
+Name	Team	Number	Position	Age	Height	Weight	College	Salary
+0	Avery Bradley	Boston Celtics	0	PG	25	2023-02-06 00:00:00	180	Texas	7730337.0
+1	Jae Crowder	Boston Celtics	99	SF	25	2023-06-06 00:00:00	235	Marquette	6796117.0
+2	John Holland	Boston Celtics	30	SG	27	2023-05-06 00:00:00	205	Boston University	NaN
+3	R.J. Hunter	Boston Celtics	28	SG	22	2023-05-06 00:00:00	185	Georgia State	1148640.0
+4	Jonas Jerebko	Boston Celtics	8	PF	29	2023-10-06 00:00:00	231	NaN	5000000.0
+5	Amir Johnson	Boston Celtics	90	PF	29	2023-09-06 00:00:00	240	NaN	12000000.0
+df["Age"]
+0      25
+1      25
+2      27
+3      22
+4      29
+       ..
+452    20
+453    26
+454    24
+455    26
+456    26
+Name: Age, Length: 457, dtype: int64
+df["Team"]
+0      Boston Celtics
+1      Boston Celtics
+2      Boston Celtics
+3      Boston Celtics
+4      Boston Celtics
+            ...      
+452         Utah Jazz
+453         Utah Jazz
+454         Utah Jazz
+455         Utah Jazz
+456         Utah Jazz
+Name: Team, Length: 457, dtype: object
+import numpy as np
+from collections import Counter
+
+# converting column in to array
+
+T1 = df["Team"]
+
+# convert to Python list
+teams_list = T1.tolist()
+
+# create a Counter object
+teams_count = Counter(teams_list)
+
+# get the item with highest occurrence
+most_common_team = teams_count.most_common(1)
+
+print("Team with highest occurrence:", most_common_team[0][0])
+Team with highest occurrence: New Orleans Pelicans
+filtered_data = df[df['Age'] > 35]
+count = len(filtered_data['Name'])
+
+print("Number of names with age more than 35:", count)
+Number of names with age more than 35: 23
+filtered_data = df[df['Age'] > 35]
+# filter data with age more than 35
+filtered_data = df[df['Age'] > 35]
+
+# count number of records for the "PF" position
+pf_count = filtered_data[filtered_data['Position'] == 'PF'].shape[0]
+
+print("Number of records for the PF position:", pf_count)
+Number of records for the PF position: 6
+# filter data with age more than 35
+filtered_data = df[df['Age'] > 35]
+
+# count number of records for the "PF" position
+pf_count = filtered_data[filtered_data['Position'] == 'PG'].shape[0]
+
+print("Number of records for the PF position:", pf_count)
+Number of records for the PF position: 3
+# select names of players with age more than 35 and position "PF"
+
+selected_data = df[(df['Age'] > 35) & (df['Position'] == 'PF')]['Name']
+
+# set display options to left-align output
+
+pd.options.display.max_colwidth = None
+pd.options.display.colheader_justify = 'right'
+
+print("Names of players with age more than 35 and position 'PF':")
+print(selected_data.to_string(index=True))
+Names of players with age more than 35 and position 'PF':
+46        Elton Brand
+72         Luis Scola
+236     Dirk Nowitzki
+259    Chris Andersen
+343     Udonis Haslem
+400     Kevin Garnett
+import pandas as pd
+
+# create a sample dataframe
+data = {'name': ['Alice', 'Bob', 'Charlie', 'David', 'Emily', 'Frank'],
+        'age': [30, 40, 35, 50, 25, 45],
+        'position': ['PG', 'C', 'PF', 'SF', 'SG', 'PF']}
+df = pd.DataFrame(data)
+
+# select rows with labels 1 and 3, and columns 'name' and 'age'
+selected_data = df.loc[[1, 3], ['name', 'age']]
+
+# print the selected data
+print(selected_data)
+    name  age
+1    Bob   40
+3  David   50
+# filter the data based on position and age
+filtered_data = df.loc[(df['Position'].isin(['PF', 'SF'])) & (df['Age'] <= 25)]
+
+# group the data by team and count the number of players
+counted_data = filtered_data.groupby('Team')['Name'].count()
+
+# sort the data in descending order based on the count
+sorted_data = counted_data.sort_values(ascending=False)
+
+# select the team with the highest count
+team_with_highest_count = sorted_data.index[0]
+
+# print the result
+print(team_with_highest_count)
+Chicago Bulls
+filtered_data = df.loc[(df['Position'].isin(['PF', 'SF'])) & (df['Age'] <= 24)]
+# get a list of all the teams in the filtered data
+teams = filtered_data['Team'].unique().tolist()
+names = filtered_data['Name'].unique().tolist()
+# print the list of teams
+print(teams)
+print(names)
+# count the total number of teams in the filtered data
+num_teams = len(teams)
+
+# print the total number of teams
+print("Total number of teams in the filtered data:", num_teams)
+
+highest_salary = filtered_data['Salary'].max()
+print(highest_salary)
+# filter the data to only include rows with the highest salary
+highest_salary_data = df.loc[df['Salary'] == highest_salary]
+
+# get the name of the player with the highest salary
+highest_salary_name = highest_salary_data['Name'].iloc[0]
+
+# print the name of the player with the highest salary
+print("The player with the highest salary is:", highest_salary_name)
+['Boston Celtics', 'Brooklyn Nets', 'New York Knicks', 'Philadelphia 76ers', 'Toronto Raptors', 'Golden State Warriors', 'Los Angeles Clippers', 'Los Angeles Lakers', 'Phoenix Suns', 'Sacramento Kings', 'Chicago Bulls', 'Detroit Pistons', 'Indiana Pacers', 'Milwaukee Bucks', 'Dallas Mavericks', 'Houston Rockets', 'Memphis Grizzlies', 'New Orleans Pelicans', 'San Antonio Spurs', 'Atlanta Hawks', 'Charlotte Hornets', 'Miami Heat', 'Orlando Magic', 'Washington Wizards', 'Minnesota Timberwolves', 'Oklahoma City Thunder', 'Portland Trail Blazers', 'Utah Jazz']
+['Jordan Mickey', 'Chris McCullough', 'Thanasis Antetokounmpo', 'Kristaps Porzingis', 'Jerami Grant', 'Richaun Holmes', 'Nerlens Noel', 'Christian Wood', 'Bruno Caboclo', 'Harrison Barnes', 'Kevon Looney', 'James Michael McAdoo', 'Branden Dawson', 'Anthony Brown', 'Larry Nance Jr.', 'Julius Randle', 'T.J. Warren', 'Duje Dukan', 'Eric Moreland', 'Cristiano Felicio', 'Doug McDermott', 'Bobby Portis', 'Tony Snell', 'Tobias Harris', 'Darrun Hilliard', 'Stanley Johnson', 'Rakeem Christmas', 'Myles Turner', 'Giannis Antetokounmpo', 'Damien Inglis', "Johnny O'Bryant III", 'Jabari Parker', 'Dwight Powell', 'Clint Capela', 'Sam Dekker', 'Montrezl Harrell', 'Terrence Jones', 'P.J. Hairston', 'Jarell Martin', 'Anthony Davis', 'Kyle Anderson', 'Kawhi Leonard', 'Mike Muscala', 'Michael Kidd-Gilchrist', 'Justise Winslow', 'Aaron Gordon', 'Devyn Marble', 'Kelly Oubre Jr.', 'Otto Porter Jr.', 'Shabazz Muhammad', 'Josh Huestis', 'Mitch McGary', 'Cliff Alexander', 'Maurice Harkless', 'Meyers Leonard', 'Noah Vonleh', 'Derrick Favors', 'Trey Lyles']
+Total number of teams in the filtered data: 28
+16407500.0
+The player with the highest salary is: Jimmy Butler
+filtered_data = df.loc[(df['Position'].isin(['PF', 'SF'])) & (df['Age'] <= 25)]
+filtered_data.head(80)
+Name	Team	Number	Position	Age	Height	Weight	College	Salary
+1	Jae Crowder	Boston Celtics	99	SF	25	2023-06-06 00:00:00	235	Marquette	6796117.0
+6	Jordan Mickey	Boston Celtics	55	PF	21	2023-08-06 00:00:00	235	LSU	1170960.0
+24	Chris McCullough	Brooklyn Nets	1	PF	21	2023-11-06 00:00:00	200	Syracuse	1140240.0
+26	Thomas Robinson	Brooklyn Nets	41	PF	25	2023-10-06 00:00:00	237	Kansas	981348.0
+32	Thanasis Antetokounmpo	New York Knicks	43	SF	23	2023-07-06 00:00:00	205	NaN	30888.0
+...	...	...	...	...	...	...	...	...	...
+432	Maurice Harkless	Portland Trail Blazers	4	SF	23	2023-09-06 00:00:00	215	St. John's	2894059.0
+435	Meyers Leonard	Portland Trail Blazers	11	PF	24	2023-01-07 00:00:00	245	Illinois	3075880.0
+441	Noah Vonleh	Portland Trail Blazers	21	PF	20	2023-09-06 00:00:00	240	Indiana	2637720.0
+446	Derrick Favors	Utah Jazz	15	PF	24	2023-10-06 00:00:00	265	Georgia Tech	12000000.0
+452	Trey Lyles	Utah Jazz	41	PF	20	2023-10-06 00:00:00	234	Kentucky	2239800.0
+80 rows × 9 columns
+
+# filter data by position and age
+filtered_data = df.loc[(df['Position'].isin(['PF', 'SF'])) & (df['Age'] <= 25)]
+
+# locate rows with the name "Kawhi Leonard"
+kawhi_data = filtered_data.loc[filtered_data['Name'] == 'Kawhi Leonard']
+
+# print the data for Kawhi Leonard
+print(kawhi_data)
+              Name               Team  Number Position  Age  \
+301  Kawhi Leonard  San Antonio Spurs       2       SF   24   
+
+                  Height  Weight          College      Salary  
+301  2023-07-06 00:00:00     230  San Diego State  16407500.0  
+filtered_data = df.loc[(df['Position'].isin(['PF', 'SF'])) & (df['Age'] <= 24) & (df['Age'] >= 35)]
+filtered_data
+Name	Team	Number	Position	Age	Height	Weight	College	Salary
+# filter the dataframe by age
+filtered_df = df[(df['Age'] >= 25) & (df['Age'] <= 35)]
+
+# count the number of players in the filtered dataframe
+count = len(filtered_df)
+
+print(f"There are {count} players between the ages of 25 and 35.")
+There are 280 players between the ages of 25 and 35.
+# calculate the sum of salaries where number equals 41
+sum_salary = df.loc[df['Number'] == 41, 'Salary'].sum()
+
+print(f"The sum of salaries where number = 41 is {sum_salary}.")
+The sum of salaries where number = 41 is 22264701.0.
+# filter the dataframe by age and team
+filtered_df = df[(df['Age'] <= 23) & (df['Team'] == 'Chicago Bulls')]
+
+# calculate the average salary of the filtered dataframe
+avg_salary = filtered_df['Salary'].mean()
+
+print(f"The average salary received by players who are 23 or younger in the team 'Chicago Bulls' is {avg_salary}.")
+The average salary received by players who are 23 or younger in the team 'Chicago Bulls' is 958126.5.
+# extract the subset of players from rows 201 to 250
+subset_df = df.iloc[201:250]
+
+# calculate the average age of the subset
+avg_age = subset_df['Age'].mean()
+print(avg_age)
+26.714285714285715
+# What is the average age of players in the team Boston Celtics?
+
+avg_age = df.loc[df['Team'] == 'Boston Celtics', 'Age'].mean()
+avg_age_rounded = round(avg_age, 2)
+print(f"The Average age of Players whose team is = Boston Celtics  {avg_age_rounded}")
+The Average age of Players whose team is = Boston Celtics  24.73
+students = [['Jack', 34, 'Sydney', 'Australia',85.96],
+
+            ['Riti', 30, 'Delhi', 'India',95.20],
+
+            ['Vansh', 31, 'Delhi', 'India',85.25],
+
+            ['Nanyu', 32, 'Tokyo', 'Japan',74.21],
+
+            ['Maychan', 16, 'New York', 'US',99.63],
+
+            ['Mike', 17, 'las vegas', 'US',47.28]]
+
+ 
+
+df_s = pd.DataFrame(students,
+
+                      columns=['Name', 'Age', 'City', 'Country','Agg_Marks'],
+
+                           index=['ID01', 'ID02', 'ID03', 'ID04', 'ID05', 'ID06'])
+#df_s.iloc[:, [1,3,4]]
+#df_s.loc[:, ["Age", "Country"]]
+#df_s.loc[:, :]
+#df_s.iloc[:]
+#df_s.iloc[:, :]
+Name	Age	City	Country	Agg_Marks
+ID01	Jack	34	Sydney	Australia	85.96
+ID02	Riti	30	Delhi	India	95.20
+ID03	Vansh	31	Delhi	India	85.25
+ID04	Nanyu	32	Tokyo	Japan	74.21
+ID05	Maychan	16	New York	US	99.63
+ID06	Mike	17	las vegas	US	47.28
+df.iloc[111]
+Name                  Roy Hibbert
+Team           Los Angeles Lakers
+Number                         17
+Position                        C
+Age                            29
+Height        2023-02-07 00:00:00
+Weight                        270
+College                Georgetown
+Salary                 15592217.0
+Weight(kg)              122.46984
+Name: 111, dtype: object
+# Convert weight in lbs to kg and store in a new column "Weight(kg)"
+df.loc[111, 'Weight(kg)'] = df.loc[111, 'Weight'] * 0.453592
+
+# Display the weight in kg for the 112th record
+print("Weight in kg for the 112th record:", df.loc[111, 'Weight(kg)'])
+Weight in kg for the 112th record: 122.46984
+# group by team and compute the total salary
+total_salary = df.groupby('Team')['Salary'].sum()
+
+# print the total salary by team
+print(total_salary)
+
+#print the salary paid by Chicago Bulls
+print(total_salary['Chicago Bulls'])
+Team
+Atlanta Hawks              72902950.0
+Boston Celtics             58541068.0
+Brooklyn Nets              52528475.0
+Charlotte Hornets          78340920.0
+Chicago Bulls              86783378.0
+Cleveland Cavaliers       106988689.0
+Dallas Mavericks           71198732.0
+Denver Nuggets             60121930.0
+Detroit Pistons            67168263.0
+Golden State Warriors      88868997.0
+Houston Rockets            75283021.0
+Indiana Pacers             66751826.0
+Los Angeles Clippers       94854640.0
+Los Angeles Lakers         71770431.0
+Memphis Grizzlies          76550880.0
+Miami Heat                 82515673.0
+Milwaukee Bucks            69603517.0
+Minnesota Timberwolves     59709697.0
+New Orleans Pelicans       82750774.0
+New York Knicks            73303898.0
+Oklahoma City Thunder      93765298.0
+Orlando Magic              60161470.0
+Philadelphia 76ers         30992894.0
+Phoenix Suns               63445135.0
+Portland Trail Blazers     48301818.0
+Sacramento Kings           71683666.0
+San Antonio Spurs          84442733.0
+Toronto Raptors            71117611.0
+Utah Jazz                  63060091.0
+Washington Wizards         76328636.0
+Name: Salary, dtype: float64
+86783378.0
+# Group the data by team and position, and compute the average age
+grouped = df.groupby(['Team', 'Position'])['Age'].mean()
+#utah_jazz = grouped.loc[('Utah Jazz', slice(None)), 'Age']
+#UZ = grouped.loc[grouped['Team'] == 'Utah Jazz']
+#print(UZ)
+
+# Print the result
+print(grouped)
+
+avg_age = df.loc[(df['Team'] == 'Utah Jazz') & (df['Position'] == 'PG'), 'Age'].mean()
+print(avg_age)
+Team                Position
+Atlanta Hawks       C           28.333333
+                    PF          28.250000
+                    PG          24.500000
+                    SF          29.000000
+                    SG          29.500000
+                                  ...    
+Washington Wizards  C           30.666667
+                    PF          30.000000
+                    PG          27.500000
+                    SF          25.500000
+                    SG          27.250000
+Name: Age, Length: 149, dtype: float64
+23.25
+# group the DataFrame by Team and Position, and calculate the mean, max, and min ages
+grouped = df.groupby(['Team', 'Position'])['Age'].agg(['mean', 'max', 'min'])
+
+# print the results
+print(grouped)
+
+# get the average, maximum, and minimum age of the Atlanta Hawks players playing at the ‘PG’ position
+avg_age = grouped.loc[('Atlanta Hawks', 'PG'), 'mean']
+max_age = grouped.loc[('Atlanta Hawks', 'PG'), 'max']
+min_age = grouped.loc[('Atlanta Hawks', 'PG'), 'min']
+
+print(f"Average age of Atlanta Hawks players playing at the 'PG' position: {avg_age}")
+print(f"Maximum age of Atlanta Hawks players playing at the 'PG' position: {max_age}")
+print(f"Minimum age of Atlanta Hawks players playing at the 'PG' position: {min_age}")
+                                  mean  max  min
+Team               Position                     
+Atlanta Hawks      C         28.333333   31   24
+                   PF        28.250000   31   24
+                   PG        24.500000   27   22
+                   SF        29.000000   32   26
+                   SG        29.500000   35   24
+...                                ...  ...  ...
+Washington Wizards C         30.666667   33   27
+                   PF        30.000000   34   26
+                   PG        27.500000   30   25
+                   SF        25.500000   30   20
+                   SG        27.250000   33   22
+
+[149 rows x 3 columns]
+Average age of Atlanta Hawks players playing at the 'PG' position: 24.5
+Maximum age of Atlanta Hawks players playing at the 'PG' position: 27
+Minimum age of Atlanta Hawks players playing at the 'PG' position: 22
+# Compute each team's average age and total salary by their playing position
+grouped = df.groupby(['Team', 'Position']).agg({'Age': ['mean'], 'Salary': ['sum']})
+
+# Sort the grouped results based on salary
+sorted_grouped = grouped.sort_values(('Salary', 'sum'), ascending=False)
+
+# Print the team name with the highest salary
+highest_salary_team = sorted_grouped.index[0][0]
+print("Team with the highest salary:", highest_salary_team)
+Team with the highest salary: Los Angeles Lakers
+# Filter the data for Los Angeles Lakers team
+Lakers_data = df[df['Team'] == 'Los Angeles Lakers']
+
+# Group the data by position and compute the sum of salary for each group
+grouped = Lakers_data.groupby('Position').agg({'Salary': ['sum']})
+
+# Find the position with the highest salary
+highest_salary_position = grouped.idxmax()[0]
+
+# Print the position with the highest salary
+print("Position with the highest salary for Los Angeles Lakers:", highest_salary_position)
+# Find the age with the highest salary
+
+highest_salary_age = Lakers_data.loc[df['Salary'].idxmax(), 'Age']
+
+# Print the age with the highest salary
+print("Age with the highest salary for the team:", highest_salary_age)
+Position with the highest salary for Los Angeles Lakers: SF
+Age with the highest salary for the team: 37
+highest_salary_age = Lakers_data.loc[df['Salary'].idxmax(), 'Age'].mean()
+
+# Print the age with the highest salary
+print("Age with the highest salary for the team:", highest_salary_age)
+Age with the highest salary for the team: 37.0
+# Create a new dataframe with the mean salary for each team
+mean_salary = df.groupby('Team')['Salary'].mean().reset_index()
+mean_salary.columns = ['Team', 'mean_salary']
+# Merge the two dataframes on the team column
+merged_df = pd.merge(df, mean_salary, on='Team')
+# Print the original dataframe
+print('Original dataframe:')
+print(df)
+
+# Print the mean salary dataframe
+print('\nMean salary dataframe:')
+print(mean_salary)
+
+# Print the merged dataframe
+print('\nMerged dataframe:')
+print(merged_df)
+
+# Find the number of players with a salary greater than their team's mean salary
+num_players_above_mean = (merged_df['Salary'] > merged_df['mean_salary']).sum()
+
+print('Number of players with salary above their team average:', num_players_above_mean)
+Original dataframe:
+              Name            Team  Number Position  Age               Height  \
+0    Avery Bradley  Boston Celtics       0       PG   25  2023-02-06 00:00:00   
+1      Jae Crowder  Boston Celtics      99       SF   25  2023-06-06 00:00:00   
+2     John Holland  Boston Celtics      30       SG   27  2023-05-06 00:00:00   
+3      R.J. Hunter  Boston Celtics      28       SG   22  2023-05-06 00:00:00   
+4    Jonas Jerebko  Boston Celtics       8       PF   29  2023-10-06 00:00:00   
+..             ...             ...     ...      ...  ...                  ...   
+452     Trey Lyles       Utah Jazz      41       PF   20  2023-10-06 00:00:00   
+453   Shelvin Mack       Utah Jazz       8       PG   26  2023-03-06 00:00:00   
+454      Raul Neto       Utah Jazz      25       PG   24  2023-01-06 00:00:00   
+455   Tibor Pleiss       Utah Jazz      21        C   26  2023-03-07 00:00:00   
+456    Jeff Withey       Utah Jazz      24        C   26                  7-0   
+
+     Weight            College     Salary  
+0       180              Texas  7730337.0  
+1       235          Marquette  6796117.0  
+2       205  Boston University        NaN  
+3       185      Georgia State  1148640.0  
+4       231                NaN  5000000.0  
+..      ...                ...        ...  
+452     234           Kentucky  2239800.0  
+453     203             Butler  2433333.0  
+454     179                NaN   900000.0  
+455     256                NaN  2900000.0  
+456     231             Kansas   947276.0  
+
+[457 rows x 9 columns]
+
+Mean salary dataframe:
+                      Team   mean_salary
+0            Atlanta Hawks  4.860197e+06
+1           Boston Celtics  4.181505e+06
+2            Brooklyn Nets  3.501898e+06
+3        Charlotte Hornets  5.222728e+06
+4            Chicago Bulls  5.785559e+06
+5      Cleveland Cavaliers  7.642049e+06
+6         Dallas Mavericks  4.746582e+06
+7           Denver Nuggets  4.294424e+06
+8          Detroit Pistons  4.477884e+06
+9    Golden State Warriors  5.924600e+06
+10         Houston Rockets  5.018868e+06
+11          Indiana Pacers  4.450122e+06
+12    Los Angeles Clippers  6.323643e+06
+13      Los Angeles Lakers  4.784695e+06
+14       Memphis Grizzlies  5.467920e+06
+15              Miami Heat  6.347359e+06
+16         Milwaukee Bucks  4.350220e+06
+17  Minnesota Timberwolves  4.593054e+06
+18    New Orleans Pelicans  4.355304e+06
+19         New York Knicks  4.581494e+06
+20   Oklahoma City Thunder  6.251020e+06
+21           Orlando Magic  4.297248e+06
+22      Philadelphia 76ers  2.213778e+06
+23            Phoenix Suns  4.229676e+06
+24  Portland Trail Blazers  3.220121e+06
+25        Sacramento Kings  4.778911e+06
+26       San Antonio Spurs  5.629516e+06
+27         Toronto Raptors  4.741174e+06
+28               Utah Jazz  4.204006e+06
+29      Washington Wizards  5.088576e+06
+
+Merged dataframe:
+              Name            Team  Number Position  Age               Height  \
+0    Avery Bradley  Boston Celtics       0       PG   25  2023-02-06 00:00:00   
+1      Jae Crowder  Boston Celtics      99       SF   25  2023-06-06 00:00:00   
+2     John Holland  Boston Celtics      30       SG   27  2023-05-06 00:00:00   
+3      R.J. Hunter  Boston Celtics      28       SG   22  2023-05-06 00:00:00   
+4    Jonas Jerebko  Boston Celtics       8       PF   29  2023-10-06 00:00:00   
+..             ...             ...     ...      ...  ...                  ...   
+452     Trey Lyles       Utah Jazz      41       PF   20  2023-10-06 00:00:00   
+453   Shelvin Mack       Utah Jazz       8       PG   26  2023-03-06 00:00:00   
+454      Raul Neto       Utah Jazz      25       PG   24  2023-01-06 00:00:00   
+455   Tibor Pleiss       Utah Jazz      21        C   26  2023-03-07 00:00:00   
+456    Jeff Withey       Utah Jazz      24        C   26                  7-0   
+
+     Weight            College     Salary   mean_salary  
+0       180              Texas  7730337.0  4.181505e+06  
+1       235          Marquette  6796117.0  4.181505e+06  
+2       205  Boston University        NaN  4.181505e+06  
+3       185      Georgia State  1148640.0  4.181505e+06  
+4       231                NaN  5000000.0  4.181505e+06  
+..      ...                ...        ...           ...  
+452     234           Kentucky  2239800.0  4.204006e+06  
+453     203             Butler  2433333.0  4.204006e+06  
+454     179                NaN   900000.0  4.204006e+06  
+455     256                NaN  2900000.0  4.204006e+06  
+456     231             Kansas   947276.0  4.204006e+06  
+
+[457 rows x 10 columns]
+Number of players with salary above their team average: 148
+import pandas as pd
+df = pd.read_excel('nbanew.xlsx')
+print (df.dtypes)
+df
+Name         object
+Team         object
+Number        int64
+Position     object
+Age           int64
+Height       object
+Weight        int64
+College      object
+Salary      float64
+dtype: object
+Name	Team	Number	Position	Age	Height	Weight	College	Salary
+0	Avery Bradley	Boston Celtics	0	PG	25	6-2	180	Texas	7730337.0
+1	Jae Crowder	Boston Celtics	99	SF	25	6-6	235	Marquette	6796117.0
+2	John Holland	Boston Celtics	30	SG	27	6-5	205	Boston University	NaN
+3	R.J. Hunter	Boston Celtics	28	SG	22	6-5	185	Georgia State	1148640.0
+4	Jonas Jerebko	Boston Celtics	8	PF	29	6-10	231	NaN	5000000.0
+...	...	...	...	...	...	...	...	...	...
+452	Trey Lyles	Utah Jazz	41	PF	20	6-10	234	Kentucky	2239800.0
+453	Shelvin Mack	Utah Jazz	8	PG	26	6-3	203	Butler	2433333.0
+454	Raul Neto	Utah Jazz	25	PG	24	6-1	179	NaN	900000.0
+455	Tibor Pleiss	Utah Jazz	21	C	26	7-3	256	NaN	2900000.0
+456	Jeff Withey	Utah Jazz	24	C	26	7-0	231	Kansas	947276.0
+457 rows × 9 columns
+
+# split 'Height' into two separate columns for feet and inches
+df[['feet', 'inches']] = df['Height'].str.split('-', expand=True)
+
+# convert feet and inches to centimeters and store in 'height_cm' column
+df['height_cm'] = df['feet'].astype(int) * 30.48 + df['inches'].astype(int) * 2.54
+
+# print the updated dataframe with both height columns
+print(df[['Height', 'height_cm']].head())
+
+# Filter the data for Los Angeles Lakers team and SF position
+filtered_data = df[(df['Team'] == 'Los Angeles Lakers') & (df['Position'] == 'SF')]
+
+# Compute the average age of the players
+average_age = filtered_data['Age'].mean()
+
+# Print the average age of the players
+print("Average age of Los Angeles Lakers SF players:", round(average_age, 2))
+
+height_112 = df.loc[111, 'height_cm']
+print("The height in cms for the 112th record is:", round(height_112,2))
+
+# Get the weight (in pounds) and height (in cm) for the 112th record
+weight_112 = df.loc[111, 'Weight']
+height_112 = df.loc[111, 'height_cm']
+
+# Convert the weight from pounds to kg
+weight_112_kg = weight_112 * 0.453592
+
+# Convert the height from cm to m
+height_112_m = height_112 / 100
+
+# Calculate the BMI using the formula
+bmi_112 = weight_112_kg / (height_112_m ** 2)
+
+# Print the BMI for the 112th record
+print("The BMI for the 112th record is:", bmi_112)
+  Height  height_cm
+0    6-2     187.96
+1    6-6     198.12
+2    6-5     195.58
+3    6-5     195.58
+4   6-10     208.28
+Average age of Los Angeles Lakers SF players: 31.75
+The height in cms for the 112th record is: 218.44
+The BMI for the 112th record is: 25.666391516666213
+# Get the weight (in pounds) and height (in cm) for all records
+weights = df['Weight']
+heights = df['height_cm']
+
+# Convert the weights from pounds to kg
+weights_kg = weights * 0.453592
+
+# Convert the heights from cm to m
+heights_m = heights / 100
+
+# Calculate the BMI for all records using the formula
+bmi = weights_kg / (heights_m ** 2)
+
+# Create a new column called "BMI Evaluation" and assign the BMI status based on the conditions
+df['BMI Evaluation'] = pd.cut(bmi, 
+                              bins=[0, 18.4, 24.9, 29.9, 34.9, 39.9, float('inf')], 
+                              labels=["Underweight", "Healthy", "Over Weight", "Severely Over Weight", "Obese", "Severely Obese"])
+
+# Print the first five rows of the updated DataFrame to verify the new column
+print(df.head())
+# Count the occurrence of each BMI status
+bmi_counts = df['BMI Evaluation'].value_counts()
+
+# Print the count of each BMI status
+print("Count of each BMI status:")
+print(bmi_counts)
+
+# Get the number of players with a "Healthy" BMI status
+healthy_count = bmi_counts.loc['Healthy']
+
+# Print the number of players with a "Healthy" BMI status
+print("Number of players with a 'Healthy' BMI status:", healthy_count)
+            Name            Team  Number Position  Age Height  Weight  \
+0  Avery Bradley  Boston Celtics       0       PG   25    6-2     180   
+1    Jae Crowder  Boston Celtics      99       SF   25    6-6     235   
+2   John Holland  Boston Celtics      30       SG   27    6-5     205   
+3    R.J. Hunter  Boston Celtics      28       SG   22    6-5     185   
+4  Jonas Jerebko  Boston Celtics       8       PF   29   6-10     231   
+
+             College     Salary feet inches  height_cm BMI Evaluation  
+0              Texas  7730337.0    6      2     187.96        Healthy  
+1          Marquette  6796117.0    6      6     198.12    Over Weight  
+2  Boston University        NaN    6      5     195.58        Healthy  
+3      Georgia State  1148640.0    6      5     195.58        Healthy  
+4                NaN  5000000.0    6     10     208.28        Healthy  
+Count of each BMI status:
+Healthy                 243
+Over Weight             212
+Severely Over Weight      2
+Underweight               0
+Obese                     0
+Severely Obese            0
+Name: BMI Evaluation, dtype: int64
+Number of players with a 'Healthy' BMI status: 243
+ 
